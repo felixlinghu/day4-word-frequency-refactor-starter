@@ -9,10 +9,10 @@ public class WordFrequencyGame {
         }
         List<Map.Entry<String,Integer>> sortedResult=new ArrayList<>(occurrenceFrequencyWord.entrySet());
         Collections.sort(sortedResult, (entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
-        return toString(sortedResult);
+        return getString(sortedResult);
     }
 
-    private static String toString(List<Map.Entry<String, Integer>> sortedResult) {
+    private static String getString(List<Map.Entry<String, Integer>> sortedResult) {
         StringJoiner joiner = new StringJoiner("\n");
         for (Map.Entry sortedEntry: sortedResult) {
             String s = sortedEntry.getKey() + " " + sortedEntry.getValue();
