@@ -3,10 +3,17 @@ import java.util.List;
 
 public class MarsRover {
 
+  public static final char LEFT = 'L';
+  public static final char CHAR = 'R';
+  public static final char WEST = 'W';
+  public static final char DIRECTION = 'E';
+  public static final char SOUTH = 'S';
+  public static final char NORTH = 'N';
   private int x;
   private int y;
   private char direction;
-  public static final char[] DIRECATIONS = {'W', 'S', 'E', 'N'};
+  private final static char MOVE='m';
+
 
   public MarsRover(int x, int y, char direction) {
     this.x = x;
@@ -15,13 +22,13 @@ public class MarsRover {
   }
 
   public List<Integer> operateMarsRover(char command) {
-    if (command == 'M') {
+    if (command == MOVE) {
       return marsRoverMove();
     }
-    if (command == 'L') {
+    if (command == LEFT) {
       return marsRoverLeft();
     }
-    if (command == 'R') {
+    if (command == CHAR) {
       return marsRoverRight();
     }
     throw new RuntimeException("invalid command");
@@ -32,10 +39,10 @@ public class MarsRover {
     currentLocation.add(x);
     currentLocation.add(y);
     switch (direction) {
-      case 'N' -> direction = 'W';
-      case 'S' -> direction = 'E';
-      case 'W' -> direction = 'S';
-      case 'E' -> direction = 'N';
+      case NORTH -> direction = WEST;
+      case SOUTH -> direction = DIRECTION;
+      case WEST -> direction = SOUTH;
+      case DIRECTION -> direction = NORTH;
     }
     currentLocation.add((int) direction);
     return currentLocation;
@@ -46,10 +53,10 @@ public class MarsRover {
     currentLocation.add(x);
     currentLocation.add(y);
     switch (direction) {
-      case 'N' -> direction = 'E';
-      case 'S' -> direction = 'W';
-      case 'W' -> direction = 'N';
-      case 'E' -> direction = 'S';
+      case NORTH -> direction = DIRECTION;
+      case SOUTH -> direction = WEST;
+      case WEST -> direction = NORTH;
+      case DIRECTION -> direction = SOUTH;
     }
     currentLocation.add((int) direction);
     return currentLocation;
@@ -58,10 +65,10 @@ public class MarsRover {
   private List<Integer> marsRoverMove() {
     ArrayList<Integer> currentLocation = new ArrayList<>();
     switch (direction) {
-      case 'N' -> y++;
-      case 'S' -> y--;
-      case 'W' -> x++;
-      case 'E' -> x--;
+      case NORTH -> y++;
+      case SOUTH -> y--;
+      case WEST -> x++;
+      case DIRECTION -> x--;
     }
     currentLocation.add(x);
     currentLocation.add(y);
