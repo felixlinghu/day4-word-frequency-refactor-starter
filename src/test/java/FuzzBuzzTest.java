@@ -32,4 +32,14 @@ public class FuzzBuzzTest {
     //then
     assertEquals("Buzz",result);
   }
+  @Test
+  public void shoule_return_FuzzBuzz_when_order_is_fifteen(){
+    //given
+    int order=15;
+    //when
+    String result=FuzzBuzz.countOff(order);
+    //then
+    assertEquals("FuzzBuzz",result);
+  }
+
 }
