@@ -22,17 +22,11 @@ class MarsRoverTest {
       List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('M');
       //then
       List<Integer> expect = new ArrayList<>();
-      if (direction == 'N') {
-        y++;
-      }
-      if (direction == 'S') {
-        y--;
-      }
-      if (direction == 'W') {
-        x++;
-      }
-      if (direction == 'E') {
-        x--;
+      switch (direction) {
+        case 'N' -> y++;
+        case 'S' -> y--;
+        case 'W' -> x++;
+        case 'E' -> x--;
       }
       expect.add(x);
       expect.add(y);
@@ -59,17 +53,11 @@ class MarsRoverTest {
       List<Integer> expect = new ArrayList<>();
       expect.add(x);
       expect.add(y);
-      if (direction == 'N') {
-        direction='E';
-      }
-      if (direction == 'S') {
-        direction='W';
-      }
-      if (direction == 'W') {
-        direction='N';
-      }
-      if (direction == 'E') {
-        direction='S';
+      switch (direction) {
+        case 'N' -> direction = 'E';
+        case 'S' -> direction = 'W';
+        case 'W' -> direction = 'N';
+        case 'E' -> direction = 'S';
       }
       expect.add((int) direction);
       assertEquals(expect, result);
@@ -78,10 +66,9 @@ class MarsRoverTest {
 
   @Test
   public void should_return_direction_change_when_command_is_Right() {
-    //given
     int x = 0;
     int y = 0;
-    Character command = 'M';
+    Character command = 'L';
     List<Character> directions = new ArrayList<>();
     directions.add('W');
     directions.add('N');
@@ -89,14 +76,19 @@ class MarsRoverTest {
     directions.add('E');
     for (char direction : directions) {
       //when
-      List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('M');
+      List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('R');
       //then
       List<Integer> expect = new ArrayList<>();
-      expect.add(-1);
-      expect.add(0);
+      expect.add(x);
+      expect.add(y);
+      switch (direction) {
+        case 'N' -> direction = 'W';
+        case 'S' -> direction = 'E';
+        case 'W' -> direction = 'S';
+        case 'E' -> direction = 'N';
+      }
       expect.add((int) direction);
       assertEquals(expect, result);
-      fail();
     }
   }
 }

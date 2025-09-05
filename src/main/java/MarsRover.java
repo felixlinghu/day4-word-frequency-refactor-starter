@@ -21,24 +21,35 @@ public class MarsRover {
     if (command == 'L') {
       return marsRoverLeft();
     }
-    return null;
+    if (command == 'R') {
+      return marsRoverRight();
+    }
+    throw new RuntimeException("invalid command");
+  }
+
+  private List<Integer> marsRoverRight() {
+    ArrayList<Integer> currentLocation = new ArrayList<>();
+    currentLocation.add(x);
+    currentLocation.add(y);
+    switch (direction) {
+      case 'N' -> direction = 'W';
+      case 'S' -> direction = 'E';
+      case 'W' -> direction = 'S';
+      case 'E' -> direction = 'N';
+    }
+    currentLocation.add((int) direction);
+    return currentLocation;
   }
 
   private List<Integer> marsRoverLeft() {
     ArrayList<Integer> currentLocation = new ArrayList<>();
     currentLocation.add(x);
     currentLocation.add(y);
-    if (direction == 'N') {
-      direction='E';
-    }
-    if (direction == 'S') {
-      direction='W';
-    }
-    if (direction == 'W') {
-     direction='N';
-    }
-    if (direction == 'E') {
-     direction='S';
+    switch (direction) {
+      case 'N' -> direction = 'E';
+      case 'S' -> direction = 'W';
+      case 'W' -> direction = 'N';
+      case 'E' -> direction = 'S';
     }
     currentLocation.add((int) direction);
     return currentLocation;
@@ -46,17 +57,11 @@ public class MarsRover {
 
   private List<Integer> marsRoverMove() {
     ArrayList<Integer> currentLocation = new ArrayList<>();
-    if (direction == 'N') {
-      y++;
-    }
-    if (direction == 'S') {
-      y--;
-    }
-    if (direction == 'W') {
-      x++;
-    }
-    if (direction == 'E') {
-      x--;
+    switch (direction) {
+      case 'N' -> y++;
+      case 'S' -> y--;
+      case 'W' -> x++;
+      case 'E' -> x--;
     }
     currentLocation.add(x);
     currentLocation.add(y);
