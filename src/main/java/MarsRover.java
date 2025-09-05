@@ -12,7 +12,7 @@ public class MarsRover {
   private int x;
   private int y;
   private char direction;
-  private final static char MOVE='m';
+  private final static char MOVE='M';
 
 
   public MarsRover(int x, int y, char direction) {
