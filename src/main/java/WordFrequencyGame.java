@@ -16,10 +16,7 @@ public class WordFrequencyGame {
 
   private static String getString(List<Entry<String, Integer>> sortedResult) {
     StringJoiner joiner = new StringJoiner("\n");
-    for (Entry sortedEntry : sortedResult) {
-      String s = sortedEntry.getKey() + " " + sortedEntry.getValue();
-      joiner.add(s);
-    }
+    sortedResult.stream().map(sortedEntry -> sortedEntry.getKey() + " " + sortedEntry.getValue()).forEach(joiner::add);
     return joiner.toString();
   }
 
