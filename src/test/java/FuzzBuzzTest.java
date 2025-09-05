@@ -23,4 +23,13 @@ public class FuzzBuzzTest {
     //then
     assertEquals("Fuzz",result);
   }
+  @Test
+  public void shoule_return_Buzz_when_order_is_five(){
+    //given
+    int order=5;
+    //when
+    String result=FuzzBuzz.countOff(order);
+    //then
+    assertEquals("Buzz",result);
+  }
 }
