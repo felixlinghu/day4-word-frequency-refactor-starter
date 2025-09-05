@@ -57,9 +57,21 @@ class MarsRoverTest {
       List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('L');
       //then
       List<Integer> expect = new ArrayList<>();
-      expect.add(0);
-      expect.add(0);
-      expect.add((int) 'S');
+      expect.add(x);
+      expect.add(y);
+      if (direction == 'N') {
+        direction='E';
+      }
+      if (direction == 'S') {
+        direction='W';
+      }
+      if (direction == 'W') {
+        direction='N';
+      }
+      if (direction == 'E') {
+        direction='S';
+      }
+      expect.add((int) direction);
       assertEquals(expect, result);
     }
   }

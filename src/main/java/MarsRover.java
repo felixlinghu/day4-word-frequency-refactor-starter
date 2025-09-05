@@ -28,8 +28,20 @@ public class MarsRover {
     ArrayList<Integer> currentLocation = new ArrayList<>();
     currentLocation.add(x);
     currentLocation.add(y);
-    char currentDirecton =
-        currentLocation.add()
+    if (direction == 'N') {
+      direction='E';
+    }
+    if (direction == 'S') {
+      direction='W';
+    }
+    if (direction == 'W') {
+     direction='N';
+    }
+    if (direction == 'E') {
+     direction='S';
+    }
+    currentLocation.add((int) direction);
+    return currentLocation;
   }
 
   private List<Integer> marsRoverMove() {
