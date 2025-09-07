@@ -6,7 +6,7 @@ public class MarsRover {
   public static final char LEFT = 'L';
   public static final char RIGHT = 'R';
   public static final char MOVE = 'M';
-  private static final char MOVEBACK = 'B';
+  public static final char MOVEBACK = 'B';
   public static final char WEST = 'W';
   public static final char EAST = 'E';
   public static final char SOUTH = 'S';
