@@ -22,6 +22,23 @@ public class MarsRover {
     this.y = y;
     this.direction = direction;
   }
+  public List<Integer> operateMarsRoverBatch(String commands) {
+    if (commands == null || commands.isEmpty()) {
+      List<Integer> currentLocation = new ArrayList<>();
+      currentLocation.add(x);
+      currentLocation.add(y);
+      currentLocation.add((int) direction);
+      return currentLocation;
+    }
+    for (char command : commands.toCharArray()) {
+      operateMarsRover(command);
+    }
+    List<Integer> finalLocation = new ArrayList<>();
+    finalLocation.add(x);
+    finalLocation.add(y);
+    finalLocation.add((int) direction);
+    return finalLocation;
+  }
 
   public List<Integer> operateMarsRover(char command) {
     if (command == MOVE) {

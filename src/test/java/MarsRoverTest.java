@@ -2,121 +2,155 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.junit.jupiter.api.Test;
 
 class MarsRoverTest {
 
+    @Test
+    public void should_return_location_change_when_command_is_Movement() {
+        //given
+        int x = 0;
+        int y = 0;
+        Character command = 'M';
+        List<Character> directions = new ArrayList<>();
+        directions.add('W');
+        directions.add('N');
+        directions.add('S');
+        directions.add('E');
+        for (char direction : directions) {
+            //when
+            List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('M');
+            //then
+            List<Integer> expect = new ArrayList<>();
+            switch (direction) {
+                case 'N' -> y++;
+                case 'S' -> y--;
+                case 'W' -> x--;
+                case 'E' -> x++;
+            }
+            expect.add(x);
+            expect.add(y);
+            expect.add((int) direction);
+            assertEquals(expect, result);
+        }
+    }
+
+    @Test
+    public void should_return_original_location_when_batch_commands_is_empty() {
+        // given
+        int x = 0;
+        int y = 0;
+        String commands = "";
+        ArrayList<Integer> expected = new ArrayList<>();
+        expected.add(x);
+        expected.add(y);
+        expected.add((int) 'E');
+        //when
+        List<Integer> result = new MarsRover(x, y, 'E').operateMarsRoverBatch(commands);
+        // then
+        assertEquals(expected, result);
+    }
+
   @Test
-  public void should_return_location_change_when_command_is_Movement() {
-    //given
+  public void should_return_final_location_when_batch_commands_have_values() {
+    // given
     int x = 0;
     int y = 0;
-    Character command = 'M';
-    List<Character> directions = new ArrayList<>();
-    directions.add('W');
-    directions.add('N');
-    directions.add('S');
-    directions.add('E');
-    for (char direction : directions) {
-      //when
-      List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('M');
-      //then
-      List<Integer> expect = new ArrayList<>();
-      switch (direction) {
-        case 'N' -> y++;
-        case 'S' -> y--;
-        case 'W' -> x--;
-        case 'E' -> x++;
-      }
-      expect.add(x);
-      expect.add(y);
-      expect.add((int) direction);
-      assertEquals(expect, result);
-    }}
+    String commands = "MBLRLLLLRRRRBMMB";
+    ArrayList<Integer> expected = new ArrayList<>();
+    expected.add(x);
+    expected.add(y);
+    expected.add((int) 'E');
+    //when
+    List<Integer> result = new MarsRover(x, y, 'E').operateMarsRoverBatch(commands);
+    // then
+    assertEquals(expected, result);
+  }
 
     @Test
     public void should_return_location_rollback_when_command_is_MoveBack() {
-      //given
-      int x = 0;
-      int y = 0;
-      Character command = 'B';
-      List<Character> directions = new ArrayList<>();
-      directions.add('W');
-      directions.add('N');
-      directions.add('S');
-      directions.add('E');
-      for (char direction : directions) {
-        //when
-        List<Integer> result = new MarsRover(x, y, direction).operateMarsRover(command);
-        //then
-        List<Integer> expect = new ArrayList<>();
-        switch (direction) {
-          case 'N' -> y--;
-          case 'S' -> y++;
-          case 'W' -> x++;
-          case 'E' -> x--;
+        //given
+        int x = 0;
+        int y = 0;
+        char command = 'B';
+        List<Character> directions = new ArrayList<>();
+        directions.add('W');
+        directions.add('N');
+        directions.add('S');
+        directions.add('E');
+        for (char direction : directions) {
+            //when
+            List<Integer> result = new MarsRover(x, y, direction).operateMarsRover(command);
+            //then
+            List<Integer> expect = new ArrayList<>();
+            switch (direction) {
+                case 'N' -> y--;
+                case 'S' -> y++;
+                case 'W' -> x++;
+                case 'E' -> x--;
+            }
+            expect.add(x);
+            expect.add(y);
+            expect.add((int) direction);
+            assertEquals(expect, result);
         }
-        expect.add(x);
-        expect.add(y);
-        expect.add((int) direction);
-        assertEquals(expect, result);
-      }
-  }
-
-  @Test
-  public void should_return_direction_change_when_command_is_Left() {
-    //given
-    int x = 0;
-    int y = 0;
-    Character command = 'L';
-    List<Character> directions = new ArrayList<>();
-    directions.add('W');
-    directions.add('N');
-    directions.add('S');
-    directions.add('E');
-    for (char direction : directions) {
-      //when
-      List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('L');
-      //then
-      List<Integer> expect = new ArrayList<>();
-      expect.add(x);
-      expect.add(y);
-      switch (direction) {
-        case 'N' -> direction = 'E';
-        case 'S' -> direction = 'W';
-        case 'W' -> direction = 'N';
-        case 'E' -> direction = 'S';
-      }
-      expect.add((int) direction);
-      assertEquals(expect, result);
     }
-  }
 
-  @Test
-  public void should_return_direction_change_when_command_is_Right() {
-    int x = 0;
-    int y = 0;
-    Character command = 'L';
-    List<Character> directions = new ArrayList<>();
-    directions.add('W');
-    directions.add('N');
-    directions.add('S');
-    directions.add('E');
-    for (char direction : directions) {
-      //when
-      List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('R');
-      //then
-      List<Integer> expect = new ArrayList<>();
-      expect.add(x);
-      expect.add(y);
-      switch (direction) {
-        case 'N' -> direction = 'W';
-        case 'S' -> direction = 'E';
-        case 'W' -> direction = 'S';
-        case 'E' -> direction = 'N';
-      }
-      expect.add((int) direction);
-      assertEquals(expect, result);
+    @Test
+    public void should_return_direction_change_when_command_is_Left() {
+        //given
+        int x = 0;
+        int y = 0;
+        Character command = 'L';
+        List<Character> directions = new ArrayList<>();
+        directions.add('W');
+        directions.add('N');
+        directions.add('S');
+        directions.add('E');
+        for (char direction : directions) {
+            //when
+            List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('L');
+            //then
+            List<Integer> expect = new ArrayList<>();
+            expect.add(x);
+            expect.add(y);
+            switch (direction) {
+                case 'N' -> direction = 'E';
+                case 'S' -> direction = 'W';
+                case 'W' -> direction = 'N';
+                case 'E' -> direction = 'S';
+            }
+            expect.add((int) direction);
+            assertEquals(expect, result);
+        }
     }
-  }
+
+    @Test
+    public void should_return_direction_change_when_command_is_Right() {
+        int x = 0;
+        int y = 0;
+        Character command = 'L';
+        List<Character> directions = new ArrayList<>();
+        directions.add('W');
+        directions.add('N');
+        directions.add('S');
+        directions.add('E');
+        for (char direction : directions) {
+            //when
+            List<Integer> result = new MarsRover(x, y, direction).operateMarsRover('R');
+            //then
+            List<Integer> expect = new ArrayList<>();
+            expect.add(x);
+            expect.add(y);
+            switch (direction) {
+                case 'N' -> direction = 'W';
+                case 'S' -> direction = 'E';
+                case 'W' -> direction = 'S';
+                case 'E' -> direction = 'N';
+            }
+            expect.add((int) direction);
+            assertEquals(expect, result);
+        }
+    }
 }
