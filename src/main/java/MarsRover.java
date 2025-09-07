@@ -5,7 +5,7 @@ public class MarsRover {
 
   public static final char LEFT = 'L';
   public static final char RIGHT = 'R';
-  public final static char MOVE='M';
+  public static final char MOVE = 'M';
   private static final char MOVEBACK = 'B';
   public static final char WEST = 'W';
   public static final char EAST = 'E';
@@ -15,101 +15,96 @@ public class MarsRover {
   private int y;
   private char direction;
 
-
-
   public MarsRover(int x, int y, char direction) {
     this.x = x;
     this.y = y;
     this.direction = direction;
   }
+
   public List<Integer> operateMarsRoverBatch(String commands) {
     if (commands == null || commands.isEmpty()) {
-      List<Integer> currentLocation = new ArrayList<>();
-      currentLocation.add(x);
-      currentLocation.add(y);
-      currentLocation.add((int) direction);
-      return currentLocation;
+      return getCurrentLocation();
     }
     for (char command : commands.toCharArray()) {
       operateMarsRover(command);
     }
-    List<Integer> finalLocation = new ArrayList<>();
-    finalLocation.add(x);
-    finalLocation.add(y);
-    finalLocation.add((int) direction);
-    return finalLocation;
+    return getCurrentLocation();
   }
 
   public List<Integer> operateMarsRover(char command) {
-    if (command == MOVE) {
-      return marsRoverMove();
+    switch (command) {
+      case MOVE:
+        return marsRoverMove();
+      case MOVEBACK:
+        return marsRoverMoveBack();
+      case LEFT:
+        return marsRoverLeft();
+      case RIGHT:
+        return marsRoverRight();
+      default:
+        throw new RuntimeException("invalid command: " + command);
     }
-    if (command == MOVEBACK) {
-      return marsRoverMoveBack();
-    }
-    if (command == LEFT) {
-      return marsRoverLeft();
-    }
-    if (command == RIGHT) {
-      return marsRoverRight();
-    }
-    throw new RuntimeException("invalid command");
   }
 
   private List<Integer> marsRoverMoveBack() {
-    ArrayList<Integer> currentLocation = new ArrayList<>();
-    switch (direction) {
-      case NORTH -> y--;
-      case SOUTH -> y++;
-      case WEST -> x++;
-      case EAST -> x--;
-    }
-    currentLocation.add(x);
-    currentLocation.add(y);
-    currentLocation.add((int) direction);
-    return currentLocation;
+    updatePosition(-getDeltaX(), -getDeltaY());
+    return getCurrentLocation();
   }
 
   private List<Integer> marsRoverRight() {
-    ArrayList<Integer> currentLocation = new ArrayList<>();
-    currentLocation.add(x);
-    currentLocation.add(y);
-    switch (direction) {
-      case NORTH -> direction = WEST;
-      case SOUTH -> direction = EAST;
-      case WEST -> direction = SOUTH;
-      case EAST -> direction = NORTH;
-    }
-    currentLocation.add((int) direction);
-    return currentLocation;
+    direction = switch (direction) {
+      case NORTH -> WEST;
+      case SOUTH -> EAST;
+      case WEST -> SOUTH;
+      case EAST -> NORTH;
+      default -> direction;
+    };
+    return getCurrentLocation();
   }
 
   private List<Integer> marsRoverLeft() {
-    ArrayList<Integer> currentLocation = new ArrayList<>();
-    currentLocation.add(x);
-    currentLocation.add(y);
-    switch (direction) {
-      case NORTH -> direction = EAST;
-      case SOUTH -> direction = WEST;
-      case WEST -> direction = NORTH;
-      case EAST -> direction = SOUTH;
-    }
-    currentLocation.add((int) direction);
-    return currentLocation;
+    direction = switch (direction) {
+      case NORTH -> EAST;
+      case SOUTH -> WEST;
+      case WEST -> NORTH;
+      case EAST -> SOUTH;
+      default -> direction;
+    };
+    return getCurrentLocation();
   }
 
   private List<Integer> marsRoverMove() {
-    ArrayList<Integer> currentLocation = new ArrayList<>();
-    switch (direction) {
-      case NORTH -> y++;
-      case SOUTH -> y--;
-      case WEST -> x--;
-      case EAST -> x++;
-    }
-    currentLocation.add(x);
-    currentLocation.add(y);
-    currentLocation.add((int) direction);
-    return currentLocation;
+    updatePosition(getDeltaX(), getDeltaY());
+    return getCurrentLocation();
   }
 
+  // 获取当前位置和方向的列表表示
+  private List<Integer> getCurrentLocation() {
+    List<Integer> location = new ArrayList<>();
+    location.add(x);
+    location.add(y);
+    location.add((int) direction);
+    return location;
+  }
+
+  private int getDeltaX() {
+    return switch (direction) {
+      case EAST -> 1;
+      case WEST -> -1;
+      default -> 0;
+    };
+  }
+
+  private int getDeltaY() {
+    return switch (direction) {
+      case NORTH -> 1;
+      case SOUTH -> -1;
+      default -> 0;
+    };
+  }
+
+  private void updatePosition(int deltaX, int deltaY) {
+    x += deltaX;
+    y += deltaY;
+  }
 }
