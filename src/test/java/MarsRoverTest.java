@@ -25,14 +25,42 @@ class MarsRoverTest {
       switch (direction) {
         case 'N' -> y++;
         case 'S' -> y--;
-        case 'W' -> x++;
-        case 'E' -> x--;
+        case 'W' -> x--;
+        case 'E' -> x++;
       }
       expect.add(x);
       expect.add(y);
       expect.add((int) direction);
       assertEquals(expect, result);
-    }
+    }}
+
+    @Test
+    public void should_return_location_rollback_when_command_is_MoveBack() {
+      //given
+      int x = 0;
+      int y = 0;
+      Character command = 'B';
+      List<Character> directions = new ArrayList<>();
+      directions.add('W');
+      directions.add('N');
+      directions.add('S');
+      directions.add('E');
+      for (char direction : directions) {
+        //when
+        List<Integer> result = new MarsRover(x, y, direction).operateMarsRover(command);
+        //then
+        List<Integer> expect = new ArrayList<>();
+        switch (direction) {
+          case 'N' -> y--;
+          case 'S' -> y++;
+          case 'W' -> x++;
+          case 'E' -> x--;
+        }
+        expect.add(x);
+        expect.add(y);
+        expect.add((int) direction);
+        assertEquals(expect, result);
+      }
   }
 
   @Test
